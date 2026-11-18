@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Birthday, Rahy! 🌸</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for a warm, human, storybook feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-cream: #fdfbf7;
+            --card-paper: #fffdf9;
+            --orchid-purple: #d8b4e2;
+            --orchid-deep: #9d6b99;
+            --lily-pink: #f7cad0;
+            --sage-green: #b7c9b5;
+            --ink-brown: #4a3f35;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100dvh;
+            overflow: hidden;
+            background-color: var(--bg-cream);
+            background-image: 
+                radial-gradient(#e8dfd5 1px, transparent 1px),
+                radial-gradient(#f2e9e1 1px, var(--bg-cream) 1px);
+            background-size: 32px 32px;
+            background-position: 0 0, 16px 16px;
+            font-family: 'Lora', serif;
+            color: var(--ink-brown);
+        }
+
+        .font-handwriting {
+            font-family: 'Caveat', cursive;
+        }
+
+        .font-ui {
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        /* Scrapbook Paper Card Styling */
+        .storybook-card {
+            background: var(--card-paper);
+            box-shadow: 
+                0 12px 32px -8px rgba(74, 63, 53, 0.12),
+                0 2px 6px -1px rgba(74, 63, 53, 0.06),
+                inset 0 0 40px rgba(243, 232, 222, 0.45);
+            border: 1.5px solid #efe6dc;
+            position: relative;
+        }
+
+        /* Washi Tape Accents */
+        .washi-tape {
+            position: absolute;
+            width: 95px;
+            height: 26px;
+            background: rgba(216, 180, 226, 0.45);
+            border-left: 2px dashed rgba(255,255,255,0.6);
+            border-right: 2px dashed rgba(255,255,255,0.6);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        /* Floating & Swaying Animations for Stickers */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(var(--rot, 0deg)); }
+            50% { transform: translateY(-7px) rotate(calc(var(--rot, 0deg) + 3deg)); }
+        }
+
+        @keyframes swayGentle {
+            0%, 100% { transform: rotate(var(--rot, 0deg)) scale(1); }
+            50% { transform: rotate(calc(var(--rot, 0deg) - 4deg)) scale(1.03); }
+        }
+
+        @keyframes earTwitch {
+            0%, 88%, 100% { transform: rotate(0deg); }
+            92% { transform: rotate(-8deg); }
+            96% { transform: rotate(6deg); }
+        }
+
+        .sticker-item {
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: floatSlow 4.5s ease-in-out infinite;
+            filter: drop-shadow(0 4px 6px rgba(74, 63, 53, 0.1));
+            z-index: 25;
+        }
+
+        .sticker-item:nth-child(even) {
+            animation: swayGentle 5.2s ease-in-out infinite;
+        }
+
+        .sticker-item:hover {
+            filter: drop-shadow(0 6px 10px rgba(157, 107, 153, 0.22));
+        }
+
+        .sticker-bounce {
+            animation: popBounce 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+        }
+
+        @keyframes popBounce {
+            0% { transform: scale(1) rotate(var(--rot, 0deg)); }
+            40% { transform: scale(1.26) rotate(calc(var(--rot, 0deg) + 8deg)); }
+            75% { transform: scale(0.94) rotate(calc(var(--rot, 0deg) - 4deg)); }
+            100% { transform: scale(1) rotate(var(--rot, 0deg)); }
+        }
+
+        /* Page Transition Animation */
+        .page-content-enter {
+            animation: fadeSlideIn 0.48s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes fadeSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(10px) scale(0.985);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Floating Micro-interaction Bubble */
+        .speech-bubble {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100;
+            font-family: 'Caveat', cursive;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #6d4c6b;
+            background: #fff9fb;
+            border: 1.5px solid #e5c6e3;
+            padding: 2px 12px;
+            border-radius: 999px;
+            box-shadow: 0 4px 12px rgba(157, 107, 153, 0.18);
+            animation: bubbleFloatUp 1.25s ease-out forwards;
+            white-space: nowrap;
+        }
+
+        @keyframes bubbleFloatUp {
+            0% { opacity: 0; transform: translate(-50%, 0) scale(0.7); }
+            20% { opacity: 1; transform: translate(-50%, -14px) scale(1.05); }
+            80% { opacity: 1; transform: translate(-50%, -32px) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -44px) scale(0.9); }
+        }
+
+        /* Falling Petals Canvas */
+        #petal-canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 40;
+        }
+
+        /* Button Tactile Feel */
+        .btn-storybook {
+            transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+        .btn-storybook:active:not(:disabled) {
+            transform: translateY(2px) scale(0.97);
+        }
+
+        /* Grand Centerpiece Styling for Page 5 */
+        .birthday-centerpiece {
+            font-family: 'Caveat', cursive;
+            background: linear-gradient(135deg, #6d3b6b 0%, #b8567e 50%, #9b508e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 3px 10px rgba(184, 86, 126, 0.22));
+            animation: centerpieceGlow 3.2s ease-in-out infinite;
+        }
+
+        @keyframes centerpieceGlow {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 3px 10px rgba(184, 86, 126, 0.2)); }
+            50% { transform: scale(1.035); filter: drop-shadow(0 5px 16px rgba(184, 86, 126, 0.36)); }
+        }
+    </style>
+</head>
+<body class="relative flex flex-col items-center justify-between w-full h-[100dvh] overflow-hidden select-none">
+
+    <!-- Falling Petals & Sparkles Canvas -->
+    <canvas id="petal-canvas"></canvas>
+
+    <!-- Main Interactive Stage (Centers Card & Scattered Stickers) -->
+    <main class="relative flex-1 w-full max-w-3xl flex items-center justify-center px-5 sm:px-10 pb-28 pt-6 overflow-hidden">
+        
+        <!-- Scattered Custom SVG Stickers Container (Mostly Orchids & Lilies + 1 Kitty & 1 Bunny) -->
+        <div id="stickers-layer" class="absolute inset-0 pointer-events-none z-25">
+            
+            <!-- 1. Blooming Purple Phalaenopsis Orchid (Top Left) -->
+            <div id="sticker-orchid-1" class="sticker-item pointer-events-auto w-20 h-20 sm:w-28 sm:h-28" onclick="interactSticker(event, 'orchid1')" title="Phalaenopsis Orchid">
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                    <!-- Curved Stem & Buds -->
+                    <path d="M20 110 Q 45 75 65 45" stroke="#7d9c78" stroke-width="3.5" stroke-linecap="round"/>
+                    <circle cx="72" cy="34" r="6" fill="#e5b8eb" stroke="#7c5278" stroke-width="2"/>
+                    <circle cx="83" cy="26" r="4.5" fill="#f3d5f7" stroke="#7c5278" stroke-width="1.8"/>
+                    <!-- Main Orchid Blossom -->
+                    <g transform="translate(52, 58)">
+                        <path d="M0 -30 C 12 -30, 16 -10, 0 0 C -16 -10, -12 -30, 0 -30 Z" fill="#f3d8f7" stroke="#7c5278" stroke-width="2.2"/>
+                        <path d="M-3 2 C -12 22, -26 20, -24 6 C -22 -4, -10 -2, -3 2 Z" fill="#edd0f2" stroke="#7c5278" stroke-width="2.2"/>
+                        <path d="M3 2 C 12 22, 26 20, 24 6 C 22 -4, 10 -2, 3 2 Z" fill="#edd0f2" stroke="#7c5278" stroke-width="2.2"/>
+                        <path d="M-2 -4 C -34 -22, -40 12, -8 8 Z" fill="#e2b4e8" stroke="#7c5278" stroke-width="2.2"/>
+                        <path d="M2 -4 C 34 -22, 40 12, 8 8 Z" fill="#e2b4e8" stroke="#7c5278" stroke-width="2.2"/>
+                        <path d="M0 0 C -12 8, -10 24, 0 20 C 10 24, 12 8, 0 0 Z" fill="#b85db3" stroke="#693666" stroke-width="2"/>
+                        <circle cx="0" cy="4" r="3.5" fill="#fde68a"/>
+                        <circle cx="-3" cy="10" r="1.2" fill="#fff"/>
+                        <circle cx="3" cy="11" r="1.2" fill="#fff"/>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- 2. Stargazer Lily Blossom (Top Right) -->
+            <div id="sticker-lily-1" class="sticker-item pointer-events-auto w-20 h-20 sm:w-28 sm:h-28" onclick="interactSticker(event, 'lily1')" title="Stargazer Lily">
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                    <path d="M58 75 C 30 92, 22 72, 48 64" fill="#9ebb99" stroke="#5c7558" stroke-width="2.2"/>
+                    <path d="M66 75 C 94 92, 102 72, 76 64" fill="#9ebb99" stroke="#5c7558" stroke-width="2.2"/>
+                    <g transform="translate(60, 56)">
+                        <path d="M0 0 C -14 -18, -10 -40, 0 -45 C 10 -40, 14 -18, 0 0 Z" stroke="#8f5b66" stroke-width="2" style="fill:#fceef0;"/>
+                        <path d="M0 0 C 20 -12, 38 -2, 42 10 C 30 18, 14 14, 0 0 Z" style="fill:#fceef0;" stroke="#8f5b66" stroke-width="2"/>
+                        <path d="M0 0 C -20 -12, -38 -2, -42 10 C -30 18, -14 14, 0 0 Z" style="fill:#fceef0;" stroke="#8f5b66" stroke-width="2"/>
+                        <path d="M0 0 C 18 -20, 36 -26, 36 -12 C 32 2, 16 4, 0 0 Z" fill="#fad2d8" stroke="#8f5b66" stroke-width="2.2"/>
+                        <path d="M0 0 C -18 -20, -36 -26, -36 -12 C -32 2, -16 4, 0 0 Z" fill="#fad2d8" stroke="#8f5b66" stroke-width="2.2"/>
+                        <path d="M0 0 C -14 16, -12 38, 0 42 C 12 38, 14 16, 0 0 Z" fill="#f7bec7" stroke="#8f5b66" stroke-width="2.2"/>
+                        <circle cx="0" cy="0" r="7" fill="#e6eed6"/>
+                        <circle cx="-6" cy="-10" r="1.3" fill="#c95b73"/>
+                        <circle cx="7" cy="-9" r="1.3" fill="#c95b73"/>
+                        <circle cx="-11" cy="3" r="1.3" fill="#c95b73"/>
+                        <circle cx="11" cy="4" r="1.3" fill="#c95b73"/>
+                        <circle cx="0" cy="14" r="1.3" fill="#c95b73"/>
+                        <path d="M0 0 L -8 -16 M0 0 L 9 -15 M0 0 L 14 2 M0 0 L -13 4 M0 0 L 0 16" stroke="#7d9c78" stroke-width="1.8" stroke-linecap="round"/>
+                        <ellipse cx="-8" cy="-17" rx="3" ry="1.6" fill="#d97757" transform="rotate(-30 -8 -17)"/>
+                        <ellipse cx="9" cy="-16" rx="3" ry="1.6" fill="#d97757" transform="rotate(30 9 -16)"/>
+                        <ellipse cx="15" cy="2" rx="3" ry="1.6" fill="#d97757"/>
+                        <ellipse cx="-14" cy="4" rx="3" ry="1.6" fill="#d97757"/>
+                        <ellipse cx="0" cy="17" rx="3" ry="1.6" fill="#d97757"/>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- 3. White & Magenta Moth Orchid Spray (Bottom Left) -->
+            <div id="sticker-orchid-2" class="sticker-item pointer-events-auto w-20 h-20 sm:w-28 sm:h-28" onclick="interactSticker(event, 'orchid2')" title="White & Rose Orchid">
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                    <!-- Graceful Arching Stem & Leaf -->
+                    <path d="M98 106 C 72 86, 62 56, 36 28" stroke="#6e8c69" stroke-width="3.2" stroke-linecap="round"/>
+                    <path d="M88 98 C 65 104, 52 92, 74 84" fill="#9ebb99" stroke="#5c7558" stroke-width="2"/>
+                    <!-- Top Bud -->
+                    <ellipse cx="28" cy="22" rx="6" ry="4.5" transform="rotate(-30 28 22)" fill="#f7d6e6" stroke="#854d6e" stroke-width="1.8"/>
+                    <!-- Upper Small Orchid Bloom -->
+                    <g transform="translate(46, 42) scale(0.68) rotate(-15)">
+                        <path d="M0 -28 C 12 -28, 15 -8, 0 0 C -15 -8, -12 -28, 0 -28 Z" fill="#fff9fc" stroke="#854d6e" stroke-width="2.2"/>
+                        <path d="M-2 -4 C -32 -20, -38 12, -8 8 Z" fill="#fae8f2" stroke="#854d6e" stroke-width="2.2"/>
+                        <path d="M2 -4 C 32 -20, 38 12, 8 8 Z" fill="#fae8f2" stroke="#854d6e" stroke-width="2.2"/>
+                        <path d="M0 0 C -10 8, -8 22, 0 18 C 8 22, 10 8, 0 0 Z" fill="#d45b90" stroke="#752d4e" stroke-width="2"/>
+                        <circle cx="0" cy="4" r="3" fill="#fde68a"/>
+                    </g>
+                    <!-- Lower Large White & Rose Orchid Bloom -->
+                    <g transform="translate(72, 70) rotate(12)">
+                        <path d="M0 -28 C 11 -28, 15 -10, 0 0 C -15 -10, -11 -28, 0 -28 Z" fill="#fffbfd" stroke="#854d6e" stroke-width="2.2"/>
+                        <path d="M-3 2 C -11 20, -24 18, -22 6 C -20 -4, -9 -2, -3 2 Z" fill="#fdf2f7" stroke="#854d6e" stroke-width="2"/>
+                        <path d="M3 2 C 11 20, 24 18, 22 6 C 20 -4, 9 -2, 3 2 Z" fill="#fdf2f7" stroke="#854d6e" stroke-width="2"/>
+                        <path d="M-2 -4 C -32 -20, -38 12, -8 8 Z" fill="#fff7fb" stroke="#854d6e" stroke-width="2.2"/>
+                        <path d="M2 -4 C 32 -20, 38 12, 8 8 Z" fill="#fff7fb" stroke="#854d6e" stroke-width="2.2"/>
+                        <path d="M0 0 C -11 8, -9 22, 0 19 C 9 22, 11 8, 0 0 Z" fill="#c94f82" stroke="#6e2846" stroke-width="2"/>
+                        <circle cx="0" cy="4" r="3.2" fill="#fde047"/>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- 4. Cream & Gold Lily Bouquet (Bottom Right) -->
+            <div id="sticker-lily-2" class="sticker-item pointer-events-auto w-20 h-20 sm:w-28 sm:h-28" onclick="interactSticker(event, 'lily2')" title="Cream & Blush Lily">
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                    <!-- Stems & Unopened Lily Bud -->
+                    <path d="M32 104 Q 54 78 64 52" stroke="#6e8c69" stroke-width="3.2" stroke-linecap="round"/>
+                    <path d="M46 86 Q 30 62 26 42" stroke="#6e8c69" stroke-width="2.6" stroke-linecap="round"/>
+                    <!-- Unopened Pink-Tipped Lily Bud -->
+                    <path d="M26 42 C 18 32, 20 16, 26 12 C 32 16, 34 32, 26 42 Z" fill="#fae3e6" stroke="#8f5b66" stroke-width="2"/>
+                    <path d="M26 42 C 22 34, 24 20, 26 12" stroke="#e598a6" stroke-width="1.5"/>
+                    <!-- Leaves -->
+                    <path d="M45 92 C 20 88, 18 70, 42 74" fill="#9ebb99" stroke="#5c7558" stroke-width="2"/>
+                    <path d="M52 88 C 78 96, 86 78, 60 74" fill="#9ebb99" stroke="#5c7558" stroke-width="2"/>
+                    <!-- Main Cream & Apricot-Pink Lily -->
+                    <g transform="translate(68, 54) rotate(14)">
+                        <path d="M0 0 C -12 -16, -9 -36, 0 -40 C 9 -36, 12 -16, 0 0 Z" fill="#fffdf7" stroke="#996b5c" stroke-width="2"/>
+                        <path d="M0 0 C 18 -10, 34 -2, 38 9 C 26 16, 12 12, 0 0 Z" fill="#fffdf7" stroke="#996b5c" stroke-width="2"/>
+                        <path d="M0 0 C -18 -10, -34 -2, -38 9 C -26 16, -12 12, 0 0 Z" fill="#fffdf7" stroke="#996b5c" stroke-width="2"/>
+                        <path d="M0 0 C 16 -18, 32 -23, 32 -10 C 28 2, 14 4, 0 0 Z" fill="#fce8d8" stroke="#996b5c" stroke-width="2.1"/>
+                        <path d="M0 0 C -16 -18, -32 -23, -32 -10 C -28 2, -14 4, 0 0 Z" fill="#fce8d8" stroke="#996b5c" stroke-width="2.1"/>
+                        <path d="M0 0 C -12 14, -10 34, 0 38 C 10 34, 12 14, 0 0 Z" fill="#f7d6c4" stroke="#996b5c" stroke-width="2.1"/>
+                        <circle cx="0" cy="0" r="6.5" fill="#fef08a"/>
+                        <path d="M0 0 L -7 -14 M0 0 L 8 -13 M0 0 L 12 2 M0 0 L -11 3 M0 0 L 0 14" stroke="#7d9c78" stroke-width="1.7" stroke-linecap="round"/>
+                        <circle cx="-7" cy="-15" r="2.2" fill="#d97757"/>
+                        <circle cx="8" cy="-14" r="2.2" fill="#d97757"/>
+                        <circle cx="13" cy="2" r="2.2" fill="#d97757"/>
+                        <circle cx="-12" cy="3" r="2.2" fill="#d97757"/>
+                        <circle cx="0" cy="15" r="2.2" fill="#d97757"/>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- 5. Cozy Calico Kitty (Single Kitty Accent) -->
+            <div id="sticker-kitty-1" class="sticker-item pointer-events-auto w-16 h-16 sm:w-24 sm:h-24" onclick="interactSticker(event, 'kitty1')" title="Cozy Kitty">
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                    <path d="M88 86 C 108 82, 112 60, 98 56" stroke="#786254" stroke-width="8" stroke-linecap="round"/>
+                    <path d="M88 86 C 108 82, 112 60, 98 56" stroke="#f7ede2" stroke-width="5" stroke-linecap="round"/>
+                    <ellipse cx="62" cy="80" rx="28" ry="22" fill="#fffaf3" stroke="#6e5a4d" stroke-width="2.5"/>
+                    <path d="M45 64 C 55 62, 60 72, 48 76 C 40 74, 40 66, 45 64 Z" fill="#e8a87c"/>
+                    <path d="M74 68 C 84 68, 86 82, 76 84 C 68 82, 68 70, 74 68 Z" fill="#a89080"/>
+                    <circle cx="52" cy="52" r="22" fill="#fffaf3" stroke="#6e5a4d" stroke-width="2.5"/>
+                    <path d="M33 38 L 28 18 L 46 31 Z" fill="#e8a87c" stroke="#6e5a4d" stroke-width="2.5" stroke-linejoin="round"/>
+                    <path d="M71 38 L 76 18 L 58 31 Z" fill="#fffaf3" stroke="#6e5a4d" stroke-width="2.5" stroke-linejoin="round"/>
+                    <path d="M69 35 L 73 23 L 61 31 Z" fill="#f7cad0"/>
+                    <!-- Tiny Orchid behind Kitty's Ear -->
+                    <circle cx="67" cy="31" r="6.5" fill="#e2b4e8" stroke="#7c5278" stroke-width="1.8"/>
+                    <circle cx="67" cy="31" r="2.2" fill="#fde68a"/>
+                    <path d="M40 50 Q 44 45 48 50" stroke="#5c493d" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M56 50 Q 60 45 64 50" stroke="#5c493d" stroke-width="2.5" stroke-linecap="round"/>
+                    <ellipse cx="37" cy="55" rx="4" ry="2.2" fill="#f7b2bd" opacity="0.7"/>
+                    <ellipse cx="67" cy="55" rx="4" ry="2.2" fill="#f7b2bd" opacity="0.7"/>
+                    <path d="M50 55 Q 52 57 54 55" stroke="#d97f8c" stroke-width="2.2" stroke-linecap="round"/>
+                    <path d="M52 56 C 52 60, 47 60, 47 58 M52 56 C 52 60, 57 60, 57 58" stroke="#5c493d" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M30 53 L 20 51 M30 57 L 19 58" stroke="#8c7768" stroke-width="1.6" stroke-linecap="round"/>
+                    <path d="M74 53 L 84 51 M74 57 L 85 58" stroke="#8c7768" stroke-width="1.6" stroke-linecap="round"/>
+                    <ellipse cx="46" cy="98" rx="7" ry="4.5" fill="#fffaf3" stroke="#6e5a4d" stroke-width="2.2"/>
+                    <ellipse cx="68" cy="98" rx="7" ry="4.5" fill="#fffaf3" stroke="#6e5a4d" stroke-width="2.2"/>
+                </svg>
+            </div>
+
+            <!-- 6. Fluffy Bunny (Single Bunny Accent) -->
+            <div id="sticker-bunny-1" class="sticker-item pointer-events-auto w-16 h-16 sm:w-24 sm:h-24" onclick="interactSticker(event, 'bunny1')" title="Fluffy Bunny">
+                <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                    <circle cx="34" cy="88" r="9" fill="#ffffff" stroke="#756357" stroke-width="2.2"/>
+                    <ellipse cx="58" cy="82" rx="23" ry="20" fill="#fffdf9" stroke="#756357" stroke-width="2.5"/>
+                    <circle cx="64" cy="56" r="20" fill="#fffdf9" stroke="#756357" stroke-width="2.5"/>
+                    <path d="M55 39 C 46 12, 34 14, 42 40" fill="#fffdf9" stroke="#756357" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M52 36 C 46 19, 39 20, 44 37" fill="#FAD2D8"/>
+                    <path d="M69 38 C 74 10, 88 12, 78 40" fill="#fffdf9" stroke="#756357" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M71 36 C 75 18, 82 19, 76 37" fill="#FAD2D8"/>
+                    <circle cx="57" cy="54" r="2.6" fill="#4a3f35"/>
+                    <circle cx="56.2" cy="53.2" r="0.9" fill="#fff"/>
+                    <circle cx="72" cy="54" r="2.6" fill="#4a3f35"/>
+                    <circle cx="71.2" cy="53.2" r="0.9" fill="#fff"/>
+                    <ellipse cx="51" cy="59" rx="3.8" ry="2" fill="#f7b2bd" opacity="0.65"/>
+                    <ellipse cx="77" cy="59" rx="3.8" ry="2" fill="#f7b2bd" opacity="0.65"/>
+                    <polygon points="64,57 61,54 67,54" fill="#eb8a9a"/>
+                    <path d="M64 57 Q 61 61 59 59 M64 57 Q 67 61 69 59" stroke="#756357" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <!-- 7. Delicate Twin Orchid & Lily-of-the-Valley Sprig (Top/Bottom Floral Accent) -->
+            <div id="sticker-orchid-3" class="sticker-item pointer-events-auto w-16 h-16 sm:w-24 sm:h-24" onclick="interactSticker(event, 'orchid3')" title="Orchid & Lily Sprig">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                    <path d="M18 82 Q 46 56 80 26" stroke="#7d9c78" stroke-width="2.8" stroke-linecap="round"/>
+                    <path d="M26 74 C 16 58, 32 48, 38 64" fill="#a7c4a0" stroke="#5c7558" stroke-width="1.8"/>
+                    <!-- Mini Orchid Blossom -->
+                    <g transform="translate(52, 48) rotate(-18) scale(0.72)">
+                        <path d="M0 -24 C 10 -24, 14 -8, 0 0 C -14 -8, -10 -24, 0 -24 Z" fill="#edd0f2" stroke="#7c5278" stroke-width="2"/>
+                        <path d="M-2 -3 C -28 -18, -32 10, -6 7 Z" fill="#dfade6" stroke="#7c5278" stroke-width="2"/>
+                        <path d="M2 -3 C 28 -18, 32 10, 6 7 Z" fill="#dfade6" stroke="#7c5278" stroke-width="2"/>
+                        <path d="M0 0 C -9 7, -8 19, 0 16 C 8 19, 9 7, 0 0 Z" fill="#a84ca3" stroke="#693666" stroke-width="1.8"/>
+                        <circle cx="0" cy="3" r="2.8" fill="#fde68a"/>
+                    </g>
+                    <!-- Blooming Lily Bud at Tip -->
+                    <path d="M78 28 C 72 16, 86 10, 88 22 C 96 16, 94 30, 78 28 Z" fill="#fad2d8" stroke="#8f5b66" stroke-width="1.8"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Central Storybook Card -->
+        <article id="card-container" class="storybook-card w-full max-w-lg rounded-3xl px-7 py-9 sm:px-12 sm:py-12 z-10 flex flex-col items-center justify-center text-center min-h-[280px] sm:min-h-[320px] transition-all duration-300">
+            
+            <!-- Decorative Washi Tape at Top Center -->
+            <div id="washi-top" class="washi-tape -top-3 left-1/2 -translate-x-1/2 -rotate-2"></div>
+
+            <!-- Subtle Inner Decorative Frame -->
+            <div class="absolute inset-3 sm:inset-4 border border-dashed border-[#e6d7c8] rounded-2xl pointer-events-none"></div>
+
+            <!-- Dynamic Text Container (Strictly only the message text) -->
+            <div id="page-text-wrapper" class="page-content-enter z-10 max-w-md mx-auto flex flex-col items-center justify-center">
+                <h1 id="page-heading" class="font-handwriting text-4xl sm:text-5xl text-[#6d4c6b] mb-3 leading-tight">
+                    Dear Rahy,
+                </h1>
+                <p id="page-body" class="text-lg sm:text-xl leading-relaxed text-[#4a3f35] font-normal">
+                    “There are a few things I want you to know. Tap the button.”
+                </p>
+
+                <!-- Grand Centerpiece "Happy birthday, Rahy." (Visible on Final Page 5) -->
+                <div id="final-centerpiece" class="hidden mt-5 pt-4 border-t border-[#efe2d5] w-full flex flex-col items-center justify-center">
+                    <div class="flex items-center justify-center gap-2 mb-1 opacity-85">
+                        <span class="text-sm sm:text-base">✨</span>
+                        <span class="text-lg sm:text-xl">🌸</span>
+                        <span class="text-sm sm:text-base">✨</span>
+                    </div>
+                    <h2 id="centerpiece-text" class="birthday-centerpiece text-5xl sm:text-6xl font-bold tracking-wide leading-none py-2 px-2">
+                        Happy birthday, Rahy.
+                    </h2>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- FIXED NAVIGATION BAR (Locked in exact same viewport position on Mobile & Desktop) -->
+    <footer class="fixed bottom-0 left-0 right-0 h-28 pb-4 pt-2 px-4 flex flex-col items-center justify-center bg-gradient-to-t from-[#fdfbf7] via-[#fdfbf7]/95 to-transparent z-50">
+        
+        <!-- Fixed Button Row: 3-Column Symmetrical Layout so Center Button is Strictly Dead-Center -->
+        <div class="grid grid-cols-[1fr_auto_1fr] items-center w-full max-w-md gap-3">
+            
+            <!-- Left Slot: Back Button -->
+            <div class="flex justify-end">
+                <button 
+                    id="back-btn" 
+                    onclick="prevPage()" 
+                    disabled
+                    aria-label="Previous Page"
+                    class="btn-storybook font-ui font-semibold text-sm sm:text-base px-3.5 py-2.5 rounded-full text-[#786557] bg-[#f5eee6] hover:bg-[#ebe0d4] border border-[#dfd2c3] shadow-sm flex items-center gap-1 opacity-0 pointer-events-none transition-opacity duration-200 cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    <span>Back</span>
+                </button>
+            </div>
+
+            <!-- Center Slot: Primary Action Button Strictly Centered -->
+            <div class="flex justify-center">
+                <button 
+                    id="next-btn" 
+                    onclick="nextPage()"
+                    aria-label="Next Page"
+                    class="btn-storybook min-w-[148px] sm:min-w-[164px] font-ui font-bold text-base sm:text-lg py-3 px-6 rounded-full text-white bg-gradient-to-r from-[#b57fb3] to-[#d98ca3] hover:from-[#a56ea3] hover:to-[#cc7b93] shadow-md hover:shadow-lg border-2 border-white/80 flex items-center justify-center gap-2 cursor-pointer">
+                    <span id="next-btn-text">Tap Here</span>
+                    <span id="next-btn-icon" class="text-lg leading-none">🌸</span>
+                </button>
+            </div>
+
+            <!-- Right Slot: Balances Left Slot so Main Button stays Dead-Center -->
+            <div class="flex justify-start"></div>
+        </div>
+
+        <!-- Page Indicators Positioned Underneath the Buttons -->
+        <div id="progress-dots" class="flex items-center gap-2 mt-3">
+            <!-- Dynamically populated by JS -->
+        </div>
+    </footer>
+
+    <script>
+        // --- 5 Pages Data for Rahy ---
+        const pages = [
+            {
+                heading: "Dear Rahy,",
+                body: "“There are a few things I want you to know. Tap the button.”",
+                btnText: "Tap Here",
+                btnIcon: "🌸",
+                washiColor: "rgba(216, 180, 226, 0.45)",
+                // Organic positions for each sticker [5 flower clusters + 1 kitty + 1 bunny]
+                stickers: {
+                    'sticker-orchid-1': { top: '3%', left: '4%', right: 'auto', bottom: 'auto', rot: '-8deg', scale: 1.05 },
+                    'sticker-lily-1':   { top: '3%', right: '4%', left: 'auto', bottom: 'auto', rot: '8deg', scale: 1.05 },
+                    'sticker-orchid-2': { bottom: '5%', left: '4%', top: 'auto', right: 'auto', rot: '6deg', scale: 1.05 },
+                    'sticker-lily-2':   { bottom: '5%', right: '4%', top: 'auto', left: 'auto', rot: '-6deg', scale: 1.05 },
+                    'sticker-kitty-1':  { top: '44%', left: '1%', right: 'auto', bottom: 'auto', rot: '8deg', scale: 0.9 },
+                    'sticker-bunny-1':  { top: '45%', right: '1%', left: 'auto', bottom: 'auto', rot: '-8deg', scale: 0.9 },
+                    'sticker-orchid-3': { top: '2%', left: '44%', right: 'auto', bottom: 'auto', rot: '12deg', scale: 0.9 }
+                }
+            },
+            {
+                heading: "",
+                body: "“We met as strangers on the internet, and you've been one of my closest friends ever since”",
+                btnText: "Next",
+                btnIcon: "🌷",
+                washiColor: "rgba(247, 202, 208, 0.55)",
+                stickers: {
+                    'sticker-orchid-1': { top: '5%', right: '5%', left: 'auto', bottom: 'auto', rot: '10deg', scale: 1.05 },
+                    'sticker-lily-1':   { bottom: '6%', left: '5%', top: 'auto', right: 'auto', rot: '-8deg', scale: 1.05 },
+                    'sticker-orchid-2': { top: '4%', left: '5%', right: 'auto', bottom: 'auto', rot: '-6deg', scale: 1 },
+                    'sticker-lily-2':   { bottom: '6%', right: '5%', top: 'auto', left: 'auto', rot: '8deg', scale: 1.05 },
+                    'sticker-kitty-1':  { top: '46%', right: '1%', left: 'auto', bottom: 'auto', rot: '-10deg', scale: 0.9 },
+                    'sticker-bunny-1':  { top: '43%', left: '1%', right: 'auto', bottom: 'auto', rot: '6deg', scale: 0.9 },
+                    'sticker-orchid-3': { bottom: '3%', left: '44%', right: 'auto', top: 'auto', rot: '-10deg', scale: 0.92 }
+                }
+            },
+            {
+                heading: "",
+                body: "“Thank you for sharing your stories and trusting me with some of your most personal thoughts. I value that more than I can say.”",
+                btnText: "Next",
+                btnIcon: "🪻",
+                washiColor: "rgba(183, 201, 181, 0.55)",
+                stickers: {
+                    'sticker-orchid-1': { bottom: '5%', left: '5%', top: 'auto', right: 'auto', rot: '-10deg', scale: 1.05 },
+                    'sticker-lily-1':   { top: '4%', right: '5%', left: 'auto', bottom: 'auto', rot: '-8deg', scale: 1.08 },
+                    'sticker-orchid-2': { bottom: '5%', right: '5%', top: 'auto', left: 'auto', rot: '8deg', scale: 1.05 },
+                    'sticker-lily-2':   { top: '4%', left: '5%', right: 'auto', bottom: 'auto', rot: '6deg', scale: 1.05 },
+                    'sticker-kitty-1':  { top: '40%', left: '1%', right: 'auto', bottom: 'auto', rot: '12deg', scale: 0.88 },
+                    'sticker-bunny-1':  { top: '48%', right: '1%', left: 'auto', bottom: 'auto', rot: '-8deg', scale: 0.88 },
+                    'sticker-orchid-3': { top: '2%', left: '45%', right: 'auto', bottom: 'auto', rot: '8deg', scale: 0.92 }
+                }
+            },
+            {
+                heading: "",
+                body: "“You’re one of the most creative people I’ve met, with great taste in music, smart, pretty and lowkey an amazing singer. We may not share many interests, but we see life in a similar way. Which makes our friendship all the more valuable for me”",
+                btnText: "Next",
+                btnIcon: "🎶",
+                washiColor: "rgba(216, 180, 226, 0.5)",
+                stickers: {
+                    'sticker-orchid-1': { top: '3%', left: '5%', right: 'auto', bottom: 'auto', rot: '-6deg', scale: 1.05 },
+                    'sticker-lily-1':   { bottom: '4%', right: '5%', top: 'auto', left: 'auto', rot: '10deg', scale: 1.05 },
+                    'sticker-orchid-2': { top: '3%', right: '5%', left: 'auto', bottom: 'auto', rot: '8deg', scale: 1.05 },
+                    'sticker-lily-2':   { bottom: '4%', left: '5%', top: 'auto', right: 'auto', rot: '-6deg', scale: 1.05 },
+                    'sticker-kitty-1':  { top: '48%', left: '1%', right: 'auto', bottom: 'auto', rot: '8deg', scale: 0.88 },
+                    'sticker-bunny-1':  { top: '42%', right: '1%', left: 'auto', bottom: 'auto', rot: '-10deg', scale: 0.88 },
+                    'sticker-orchid-3': { bottom: '2%', left: '44%', right: 'auto', top: 'auto', rot: '-6deg', scale: 0.9 }
+                }
+            },
+            {
+                heading: "",
+                body: "“Thank you for being an awesome friend. I appreciate the time we’ve spent together and hope for many more years. I hope you all the success in the future and may all your wishes come true.”",
+                centerpiece: "Happy birthday, Rahy.",
+                btnText: "",
+                btnIcon: "🌸",
+                washiColor: "rgba(247, 202, 208, 0.65)",
+                stickers: {
+                    'sticker-orchid-1': { top: '2%', left: '3%', right: 'auto', bottom: 'auto', rot: '-5deg', scale: 1.14 },
+                    'sticker-lily-1':   { top: '2%', right: '3%', left: 'auto', bottom: 'auto', rot: '6deg', scale: 1.14 },
+                    'sticker-orchid-2': { bottom: '4%', left: '3%', top: 'auto', right: 'auto', rot: '8deg', scale: 1.12 },
+                    'sticker-lily-2':   { bottom: '4%', right: '3%', top: 'auto', left: 'auto', rot: '-8deg', scale: 1.12 },
+                    'sticker-kitty-1':  { top: '45%', left: '1%', right: 'auto', bottom: 'auto', rot: '10deg', scale: 0.92 },
+                    'sticker-bunny-1':  { top: '45%', right: '1%', left: 'auto', bottom: 'auto', rot: '-10deg', scale: 0.92 },
+                    'sticker-orchid-3': { top: '1%', left: '44%', right: 'auto', bottom: 'auto', rot: '10deg', scale: 1 }
+                }
+            }
+        ];
+
+        let currentPage = 0;
+
+        // Cute reactions when clicking orchids, lilies, or the single kitty & bunny
+        const stickerReactions = {
+            orchid1: ["💜 Rahy's favorite!", "🌸 Orchid bloom~", "✨ So pretty!", "🪻 Sweet scent~"],
+            orchid2: ["🌸 White & rose orchid!", "💖 Blooming for Rahy!", "✨ Graceful petals~"],
+            orchid3: ["🪻 Delicate orchid sprig!", "🌸 Birthday blooms~", "💜 Happy Birthday!"],
+            lily1:   ["🌷 Stargazer lily!", "💖 Rahy's favorite!", "🌸 For Rahy!", "✨ Wish come true!"],
+            lily2:   ["🌼 Golden blush lily!", "🌷 Sweetest blooms~", "✨ May all wishes come true!"],
+            kitty1:  ["🐾 Purrrr~", "🐱 Meow! Happy bday!", "💕 *headbutt*", "🧶 Cozy vibes~"],
+            bunny1:  ["🐰 *boing!*", "🥕 Hoppy Birthday!", "💖 *nose twitch*", "🌸 Bunny hugs!"]
+        };
+
+        const reactionCounters = {
+            orchid1: 0, orchid2: 0, orchid3: 0, lily1: 0, lily2: 0, kitty1: 0, bunny1: 0
+        };
+
+        // Initialize UI on Load
+        function initCard() {
+            renderDots();
+            updatePage(0, false);
+            initCanvas();
+        }
+
+        // Render Progress Dots
+        function renderDots() {
+            const dotsContainer = document.getElementById('progress-dots');
+            dotsContainer.innerHTML = '';
+            pages.forEach((_, idx) => {
+                const dot = document.createElement('button');
+                dot.setAttribute('aria-label', `Go to page ${idx + 1}`);
+                dot.onclick = () => goToPage(idx);
+                dot.className = `h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                    idx === currentPage 
+                        ? 'w-7 bg-[#b57fb3] shadow-sm' 
+                        : 'w-2.5 bg-[#dfd2c3] hover:bg-[#cbb8a8]'
+                }`;
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        // Update Page Content & Move Stickers Smoothly
+        function updatePage(index, animate = true) {
+            currentPage = index;
+            const page = pages[currentPage];
+
+            const wrapper = document.getElementById('page-text-wrapper');
+            const headingEl = document.getElementById('page-heading');
+            const bodyEl = document.getElementById('page-body');
+            const washiTop = document.getElementById('washi-top');
+            const finalCenterpiece = document.getElementById('final-centerpiece');
+            const centerpieceText = document.getElementById('centerpiece-text');
+            const backBtn = document.getElementById('back-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const nextBtnText = document.getElementById('next-btn-text');
+            const nextBtnIcon = document.getElementById('next-btn-icon');
+
+            if (animate) {
+                wrapper.classList.remove('page-content-enter');
+                void wrapper.offsetWidth; // trigger reflow
+                wrapper.classList.add('page-content-enter');
+            }
+
+            // Update Text
+            if (page.heading) {
+                headingEl.textContent = page.heading;
+                headingEl.classList.remove('hidden');
+            } else {
+                headingEl.classList.add('hidden');
+            }
+
+            bodyEl.textContent = page.body;
+            // Slightly adjust font size for longer message on page 4 & 5 so card never scrolls
+            if (currentPage === 3 || currentPage === 4) {
+                bodyEl.className = "text-base sm:text-lg leading-relaxed text-[#4a3f35] font-normal";
+            } else {
+                bodyEl.className = "text-lg sm:text-xl leading-relaxed text-[#4a3f35] font-normal";
+            }
+
+            washiTop.style.background = page.washiColor;
+
+            // Show/Hide Grand Centerpiece & Transform Primary Button into Circular Flower Icon on Page 5
+            if (currentPage === pages.length - 1) {
+                centerpieceText.textContent = page.centerpiece;
+                finalCenterpiece.classList.remove('hidden');
+                
+                // Transform primary centered button into a circular flower-only icon button
+                nextBtn.className = "btn-storybook w-14 h-14 rounded-full text-white bg-gradient-to-r from-[#b57fb3] to-[#d98ca3] hover:from-[#a56ea3] hover:to-[#cc7b93] shadow-md hover:shadow-lg border-2 border-white/80 flex items-center justify-center cursor-pointer";
+                nextBtn.setAttribute('title', 'Shower Orchids & Lilies');
+                nextBtnText.textContent = "";
+                nextBtnText.classList.add('hidden');
+                nextBtnIcon.textContent = page.btnIcon;
+                nextBtnIcon.className = "text-2xl leading-none";
+                
+                triggerCelebrationBurst(32);
+            } else {
+                finalCenterpiece.classList.add('hidden');
+                
+                // Restore standard pill button shape
+                nextBtn.className = "btn-storybook min-w-[148px] sm:min-w-[164px] font-ui font-bold text-base sm:text-lg py-3 px-6 rounded-full text-white bg-gradient-to-r from-[#b57fb3] to-[#d98ca3] hover:from-[#a56ea3] hover:to-[#cc7b93] shadow-md hover:shadow-lg border-2 border-white/80 flex items-center justify-center gap-2 cursor-pointer";
+                nextBtn.removeAttribute('title');
+                nextBtnText.classList.remove('hidden');
+                nextBtnText.textContent = page.btnText;
+                nextBtnIcon.textContent = page.btnIcon;
+                nextBtnIcon.className = "text-lg leading-none";
+            }
+
+            // Update Back Button Visibility (stays in grid cell so Next button never shifts!)
+            if (currentPage === 0) {
+                backBtn.disabled = true;
+                backBtn.classList.add('opacity-0', 'pointer-events-none');
+                backBtn.classList.remove('opacity-100');
+            } else {
+                backBtn.disabled = false;
+                backBtn.classList.remove('opacity-0', 'pointer-events-none');
+                backBtn.classList.add('opacity-100');
+            }
+
+            // Update Stickers Positions
+            Object.entries(page.stickers).forEach(([id, pos]) => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.style.top = pos.top;
+                el.style.bottom = pos.bottom;
+                el.style.left = pos.left;
+                el.style.right = pos.right;
+                el.style.setProperty('--rot', pos.rot);
+                el.style.transform = `rotate(${pos.rot}) scale(${pos.scale})`;
+            });
+
+            renderDots();
+        }
+
+        function nextPage() {
+            if (currentPage < pages.length - 1) {
+                updatePage(currentPage + 1, true);
+                triggerCelebrationBurst(6);
+            } else {
+                // On the final page, clicking the centered flower icon showers orchids and lilies
+                triggerCelebrationBurst(38);
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 0) {
+                updatePage(currentPage - 1, true);
+            }
+        }
+
+        function goToPage(index) {
+            if (index >= 0 && index < pages.length && index !== currentPage) {
+                updatePage(index, true);
+            }
+        }
+
+        // Interactive Sticker Click (Bunnies, Kitties, Orchids, Lilies)
+        function interactSticker(event, key) {
+            event.stopPropagation();
+            const target = event.currentTarget;
+
+            // Bounce Animation
+            target.classList.remove('sticker-bounce');
+            void target.offsetWidth;
+            target.classList.add('sticker-bounce');
+            setTimeout(() => target.classList.remove('sticker-bounce'), 460);
+
+            // Cycle through cute speech bubble messages
+            const messages = stickerReactions[key] || ["🌸 Happy Birthday!"];
+            const msgIndex = reactionCounters[key] % messages.length;
+            reactionCounters[key]++;
+
+            const bubble = document.createElement('div');
+            bubble.className = 'speech-bubble';
+            bubble.textContent = messages[msgIndex];
+
+            const rect = target.getBoundingClientRect();
+            const centerX = Math.min(window.innerWidth - 85, Math.max(85, rect.left + rect.width / 2));
+            const topY = Math.max(40, rect.top + 8);
+
+            bubble.style.left = `${centerX}px`;
+            bubble.style.top = `${topY}px`;
+
+            document.body.appendChild(bubble);
+            setTimeout(() => bubble.remove(), 1250);
+
+            // Spawn a few petals around the tapped sticker
+            spawnPetalsAt(centerX, topY, 6);
+        }
+
+        // --- Falling Orchid & Lily Petals Canvas Engine ---
+        const canvas = document.getElementById('petal-canvas');
+        const ctx = canvas.getContext('2d');
+        let petals = [];
+
+        const petalPalette = [
+            { fill: '#e5b8eb', stroke: '#b57fb3', type: 'orchid' }, // Orchid Lavender
+            { fill: '#d89ce0', stroke: '#9d6b99', type: 'orchid' }, // Deep Orchid
+            { fill: '#fad2d8', stroke: '#d98ca3', type: 'lily' },   // Stargazer Lily Pink
+            { fill: '#fff5f7', stroke: '#e8b4bc', type: 'lily' },   // White Blush Lily
+            { fill: '#fde68a', stroke: '#e6c86e', type: 'sparkle' } // Golden Pollen Sparkle
+        ];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function createPetal(x, y, isBurst = false) {
+            const style = petalPalette[Math.floor(Math.random() * petalPalette.length)];
+            return {
+                x: x ?? Math.random() * canvas.width,
+                y: y ?? -20 - Math.random() * 60,
+                size: style.type === 'sparkle' ? (3 + Math.random() * 3) : (8 + Math.random() * 8),
+                vx: isBurst ? (Math.random() - 0.5) * 5.5 : (Math.random() - 0.5) * 1.1,
+                vy: isBurst ? (1.2 + Math.random() * 3.5) : (0.9 + Math.random() * 1.4),
+                rotation: Math.random() * Math.PI * 2,
+                rotSpeed: (Math.random() - 0.5) * 0.04,
+                swayOffset: Math.random() * Math.PI * 2,
+                swaySpeed: 0.02 + Math.random() * 0.02,
+                opacity: 0.88,
+                style
+            };
+        }
+
+        function triggerCelebrationBurst(count = 24) {
+            for (let i = 0; i < count; i++) {
+                petals.push(createPetal(
+                    canvas.width * (0.15 + Math.random() * 0.7),
+                    -10 - Math.random() * 80,
+                    true
+                ));
+            }
+        }
+
+        function spawnPetalsAt(x, y, count = 6) {
+            for (let i = 0; i < count; i++) {
+                const p = createPetal(x, y, true);
+                p.vy = -1.8 + Math.random() * 3.5;
+                petals.push(p);
+            }
+        }
+
+        function drawPetal(p) {
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rotation);
+            ctx.globalAlpha = p.opacity;
+
+            if (p.style.type === 'sparkle') {
+                ctx.fillStyle = p.style.fill;
+                ctx.beginPath();
+                ctx.arc(0, 0, p.size * 0.6, 0, Math.PI * 2);
+                ctx.fill();
+            } else if (p.style.type === 'orchid') {
+                // Rounded Orchid Petal Shape
+                ctx.fillStyle = p.style.fill;
+                ctx.strokeStyle = p.style.stroke;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(0, -p.size);
+                ctx.bezierCurveTo(p.size * 0.9, -p.size * 0.8, p.size * 0.9, p.size * 0.8, 0, p.size);
+                ctx.bezierCurveTo(-p.size * 0.9, p.size * 0.8, -p.size * 0.9, -p.size * 0.8, 0, -p.size);
+                ctx.fill();
+                ctx.stroke();
+            } else {
+                // Pointed Stargazer Lily Petal Shape
+                ctx.fillStyle = p.style.fill;
+                ctx.strokeStyle = p.style.stroke;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(0, -p.size * 1.15);
+                ctx.quadraticCurveTo(p.size * 0.75, 0, 0, p.size * 1.15);
+                ctx.quadraticCurveTo(-p.size * 0.75, 0, 0, -p.size * 1.15);
+                ctx.fill();
+                ctx.stroke();
+            }
+
+            ctx.restore();
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Keep a gentle ambient drift of 10 orchid/lily petals
+            if (petals.length < 10 && Math.random() < 0.05) {
+                petals.push(createPetal());
+            }
+
+            for (let i = petals.length - 1; i >= 0; i--) {
+                const p = petals[i];
+                p.swayOffset += p.swaySpeed;
+                p.x += p.vx + Math.sin(p.swayOffset) * 0.45;
+                p.y += p.vy;
+                p.rotation += p.rotSpeed;
+
+                if (p.y > canvas.height - 60) {
+                    p.opacity -= 0.025;
+                }
+
+                drawPetal(p);
+
+                if (p.y > canvas.height + 30 || p.opacity <= 0) {
+                    petals.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animateCanvas);
+        }
+
+        function initCanvas() {
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            for (let i = 0; i < 8; i++) {
+                petals.push(createPetal(Math.random() * window.innerWidth, Math.random() * window.innerHeight));
+            }
+            animateCanvas();
+        }
+
+        // Keyboard arrow navigation support for Desktop
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextPage();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevPage();
+            }
+        });
+
+        window.onload = initCard;
+    </script>
+</body>
+</html>
